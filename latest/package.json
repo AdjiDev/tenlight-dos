@@ -1,0 +1,23 @@
+{
+  "name": "latest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "latest": "bin/HTTP-X.js"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "gradient-string": "^1.2.0",
+    "user-agents": "^1.1.401"
+  }
+}
