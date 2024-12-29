@@ -69,6 +69,7 @@ installModules() {
     pip install requests
     pip install tabulate
     pip install rich
+    pip install bs4
     npm install
 }
 
@@ -85,6 +86,7 @@ moveScript() {
     echo "Reloading shell configuration..."
     source ~/.bashrc
     echo "tenlight is now ready!"
+    python tenlight.py
 }
 
 main() {
