@@ -67,6 +67,8 @@ checkOs() {
 installModules() {
     echo "Installing required modules..."
     pip install requests
+    pip install tabulate
+    pip install rich
     npm install
 }
 

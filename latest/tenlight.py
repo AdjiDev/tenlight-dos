@@ -255,7 +255,7 @@ class MAIN:
             info = ver.json()
             up = info.get("version")
             lu = info.get("last_update")
-            curr_ver = "1.0.0"
+            curr_ver = "1.0.3"
 
             if curr_ver != up:
                 print(
