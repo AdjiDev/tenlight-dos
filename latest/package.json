@@ -17,7 +17,10 @@
   "description": "",
   "dependencies": {
     "axios": "^1.7.9",
+    "cloudscraper": "^4.6.0",
+    "fake-useragent": "^1.0.1",
     "gradient-string": "^1.2.0",
+    "hpack": "^1.0.0",
     "user-agents": "^1.1.401"
   }
 }
