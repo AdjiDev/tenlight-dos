@@ -1,52 +1,57 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: Function to check if Node.js and npm are installed
-call :checkNodeNpm
-
-:: Function to check Node.js and npm installation
-:checkNodeNpm
+:: Fungsi untuk memeriksa apakah Node.js dan npm sudah terinstal
+:CheckNodeNpm
+echo Checking if Node.js and npm are installed...
 where node >nul 2>&1
-if %errorlevel% equ 0 (
+if %ERRORLEVEL% equ 0 (
     where npm >nul 2>&1
-    if %errorlevel% equ 0 (
+    if %ERRORLEVEL% equ 0 (
         echo Node.js and npm are already installed.
         node -v
         npm -v
+        goto InstallModules
     ) else (
-        echo npm is not installed. Please install it manually.
+        echo npm is not installed. Installing Node.js and npm...
+        goto InstallNodeNpm
     )
 ) else (
-    echo Node.js is not installed. Please install it manually.
+    echo Node.js is not installed. Installing Node.js and npm...
+    goto InstallNodeNpm
 )
-goto :menu
 
-:: Function to install Node.js and npm using the official installer
-:installNodeNpm
-echo Installing Node.js and npm...
-:: Open the official Node.js download page for Windows
+:: Fungsi untuk menginstal Node.js dan npm
+:InstallNodeNpm
+echo Opening Node.js download page...
 start https://nodejs.org/en/download/
-goto :menu
+echo Please install Node.js and npm manually, then rerun this script.
+pause
+exit /b
 
-:: Function to install Python pip module
-:installAll
-npm i
+:: Fungsi untuk menginstal modul Python dan Node.js
+:InstallModules
+echo Installing required modules...
+
+:: Periksa apakah pip terinstal
+where pip >nul 2>&1
+if %ERRORLEVEL% neq 0 (
+    echo pip is not installed. Please install Python and pip manually.
+    start https://www.python.org/downloads/
+    pause
+    exit /b
+)
+
+:: Instal modul Python
 pip install requests
 
-:: Main Menu
-:menu
-cls
-echo Installer Menu
-echo ================
-echo 1. Check if Node.js and npm are installed
-echo 2. Install Node.js and npm
-echo 3. Install all and run
-echo 4. Exit
-set /p choice="Please select an option (1-4): "
+:: Instal modul Node.js (jika ada package.json)
+if exist package.json (
+    npm install
+) else (
+    echo No package.json found. Skipping npm install.
+)
 
-if "%choice%"=="1" goto :checkNodeNpm
-if "%choice%"=="2" goto :installNodeNpm
-if "%choice%"=="3" goto :installAll
-if "%choice%"=="4" exit
-echo Invalid option. Please try again.
-goto :menu
+echo All required modules have been installed successfully.
+pause
+python tenlight.py

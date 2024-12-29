@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to check if Node.js and npm are installed
 checkNodeNpm() {
     if command -v node &> /dev/null && command -v npm &> /dev/null; then
         echo "Node.js and npm are already installed."
@@ -8,27 +7,13 @@ checkNodeNpm() {
         npm -v
     else
         echo "Node.js or npm is not installed."
+        installNodeNpm
     fi
 }
 
-# install all
-InstallAll() {
-    npm i
-    pip install requests
-    python tenlight.py
-}
-
-# Function to install Node.js and npm based on the OS
 installNodeNpm() {
     echo "Installing Node.js and npm..."
-    os_name=$(CheckOs)
-
-    # Ask for confirmation before installing
-    read -p "Do you want to install Node.js and npm? (y/n): " confirmation
-    if [[ $confirmation != "y" && $confirmation != "Y" ]]; then
-        echo "Installation aborted."
-        return
-    fi
+    os_name=$(checkOs)
 
     case $os_name in
         "Ubuntu" | "Debian")
@@ -64,11 +49,11 @@ installNodeNpm() {
         echo "Node.js and npm installed successfully."
     else
         echo "Failed to install Node.js and npm."
+        exit 1
     fi
 }
 
-# Function to check the operating system
-CheckOs() {
+checkOs() {
     if [ -f /data/data/com.termux/files/usr/bin/bash ]; then
         echo "Termux"
     elif [ -f /etc/os-release ]; then
@@ -79,38 +64,32 @@ CheckOs() {
     fi
 }
 
-# Main installer menu function
-installerMenu() {
-    clear
-    echo "Installer Menu By ChatGpt"
-    echo "==============="
-    echo "1. Check if Node.js and npm are installed"
-    echo "2. Install Node.js and npm"
-    echo "3. Install all and run"
-    echo "4. Exit"
-    
-    read -p "Please select an option (1-4): " choice
-    
-    case $choice in
-        1)
-            checkNodeNpm
-            ;;
-        2)
-            installNodeNpm
-            ;;
-        3)
-            InstallAll
-            ;;
-        4)
-            echo "Exiting..."
-            exit 0
-            ;;
-        *)
-            echo "Invalid option. Please try again."
-            installerMenu
-            ;;
-    esac
+installModules() {
+    echo "Installing required modules..."
+    pip install requests
+    npm install
 }
 
-# Run the installer menu
-installerMenu
+moveScript() {
+    echo "Moving tenlight.py to ~/bin/..."
+    mv tenlight.py ~/bin/
+    
+    if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
+        echo "Adding ~/bin to PATH..."
+        export PATH="$HOME/bin:$PATH"
+        echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+    fi
+
+    echo "Reloading shell configuration..."
+    source ~/.bashrc
+    echo "tenlight is now ready!"
+}
+
+main() {
+    checkNodeNpm
+    installModules
+    moveScript
+    echo "All setup completed successfully."
+}
+
+main

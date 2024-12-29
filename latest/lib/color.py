@@ -1,8 +1,8 @@
 class Colors:
-    #Reset
+    # Reset
     reset = '\033[0m'
 
-    #Basic
+    # Basic
     blck = '\033[30m'
     rd = '\033[31m'
     gr = '\033[32m'
@@ -12,7 +12,7 @@ class Colors:
     cy = '\033[36m'
     wht = '\033[37m'
 
-    #Bright
+    # Bright
     br_blck = '\033[90m'
     br_rd = '\033[91m'
     br_gr = '\033[92m'
@@ -22,7 +22,7 @@ class Colors:
     br_cy = '\033[96m'
     br_wht = '\033[97m'
 
-    #bg colors
+    # BG Colors
     bg_blck = '\033[40m'
     bg_rd = '\033[41m'
     bg_gr = '\033[42m'
@@ -31,3 +31,12 @@ class Colors:
     bg_magen = '\033[45m'
     bg_cy = '\033[46m'
     bg_wht = '\033[47m'
+
+    # RGB Colors by chatgpt
+    lime_green = '\033[38;2;50;205;50m'  
+    orange = '\033[38;2;255;165;0m'     
+    purple = '\033[38;2;128;0;128m'     
+    pink = '\033[38;2;255;105;180m'     
+    teal = '\033[38;2;0;128;128m'       
+    sky_blue = '\033[38;2;135;206;235m' 
+    gold = '\033[38;2;255;215;0m'       
